@@ -14,3 +14,8 @@ export const registerCustomer = async (customer: CustomerRequest) => {
     throw error;
   }
 };
+
+export const getCustomerById = async (id: string): Promise<CustomerRequest> => {
+  const response = await axios.get(`${API_URL}/${id}`);
+  return response.data;
+};

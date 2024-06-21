@@ -22,7 +22,7 @@ const App: React.FC = () => {
         <Header />
         <div className="flex flex-grow">
           <Sidebar isCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar} />
-          <div className="flex-grow">
+          <div className="flex-grow overflow-x-auto">
             <Container>
               <Routes>
                 <Route path="/" element={<Home />} />

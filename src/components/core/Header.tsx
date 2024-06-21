@@ -5,7 +5,7 @@ import { FiHome, FiLogOut } from 'react-icons/fi';
 
 const Header: React.FC = () => {
   return (
-    <header className={`flex bg-gray-900 text-white p-4`}>
+    <header className={`flex w-min-full bg-gray-900 text-white p-4`}>
       <div className="flex items-center space-x-2">
         <Link to="/" className="flex items-center space-x-2">
           <FiHome size={24} />
