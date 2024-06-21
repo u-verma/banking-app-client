@@ -18,7 +18,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleSidebar }) => {
       <nav className="mt-2">
         <ul className="space-y-0 ml-2">
           <li>
-            <Link to="/admin" className="flex justify-between items-center space-x-4 p-2 mr-10 hover:bg-gray-700 rounded">
+            <Link to="/admin" className="flex justify-between items-center space-x-4 p-2 mr-14 hover:bg-gray-700 rounded">
               <FiUnlock size={24} />
               {!isCollapsed && <span>Admin</span>}
             </Link>

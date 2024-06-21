@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import CustomDatePicker from '../../components/core/CustomDatePicker';
 import { registerCustomer } from '../service/apiService';
 import { CustomerRequest } from '../models/CustomerRequest';
+import { CustomerResponse } from '../models/CustomerResponse';
 import Container from '../../components/core/Container';
 import InputField from '../../components/core/InputField';
 import AddressField from './AddressField';
 import Button from '../../components/core/Button';
-import { FiDownload, FiMinus, FiPlus } from 'react-icons/fi';
+import { FiPlus } from 'react-icons/fi';
+import CustomerResponseDisplay from './CustomerResponseDisplay';
 
 const CustomerRegister: React.FC = () => {
 
@@ -25,6 +27,8 @@ const CustomerRegister: React.FC = () => {
       country: ''
     }],
   });
+
+  const [response, setResponse] = useState<CustomerResponse | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -72,7 +76,7 @@ const CustomerRegister: React.FC = () => {
     console.log("Form submitted with values:", formValues);
     try {
       const response = await registerCustomer(formValues);
-      console.log("Response from server:", response);
+      setResponse(response);
       alert("Registration successful!");
     } catch (error) {
       console.error("Error during registration:", error);
@@ -80,8 +84,25 @@ const CustomerRegister: React.FC = () => {
     }
   };
 
+  const handleEdit = () => {
+    // Implement edit functionality
+    alert("Edit functionality to be implemented");
+  };
+
+  const handleDelete = () => {
+    // Implement delete functionality
+    alert("Delete functionality to be implemented");
+  };
+
+  const handleView = () => {
+    // Implement view functionality
+    alert("View functionality to be implemented");
+  };
+
+
   return (
     <Container>
+      {!response ? (
       <div className="w-3/4 mx-auto border border-gray-300 rounded p-10 bg-gray-300">
         <h1 className="text-3xl font-bold mb-8 text-center">Register</h1>
         <form onSubmit={handleSubmit} className="space-y-0">
@@ -116,6 +137,14 @@ const CustomerRegister: React.FC = () => {
           <Button label="Register" type="submit" className="w-full" />
         </form>
       </div>
+      ) : (
+        <CustomerResponseDisplay
+          response={response}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onView={handleView}
+        />
+      )}
     </Container>
   );
 };
