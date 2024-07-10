@@ -20,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({ onClick, className, children }) => {
         shadow-blue-400
         shadow-md
         border border-white 
+        flex items-center justify-center
         ${className}`}
     >
       {children}

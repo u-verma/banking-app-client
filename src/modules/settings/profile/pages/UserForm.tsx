@@ -5,18 +5,19 @@ import Button from '../../../core/components/Button';
 import { Address, AddressType, RegisterUserRequest, UpdateUserProfile, UserType } from '../../../register/model/UserModel';
 import AddressForm from '../../../register/pages/AddressForm';
 import Option from '../../../core/components/Option';
-import { FiPlusCircle } from 'react-icons/fi';
+import { FiPlusCircle, FiArrowLeft} from 'react-icons/fi';
 
 const addressTypes = [AddressType.HOME, AddressType.WORK, AddressType.OTHER];
 const userTypes = [UserType.ADMIN, UserType.CUSTOMER, UserType.EMPLOYEE];
 
 interface UserFormProps {
   userModel?: RegisterUserRequest | UpdateUserProfile;
-  mode: 'view' | 'edit' | 'register';
+  mode: 'view' | 'edit' | 'register' | 'list';
   onSubmit: (userModel: RegisterUserRequest | UpdateUserProfile) => void;
+  setListMode?: () => void;
 }
 
-const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit }) => {
+const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit, setListMode }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -25,7 +26,7 @@ const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit }) => {
   const [userType, setUserType] = useState<UserType | ''>(userModel?.userType || '');
   const [email, setEmail] = useState(userModel?.email || '');
   const [phone, setPhone] = useState(userModel?.phone || '');
-  const [dateOfBirth, setDateOfBirth] = useState<String | null>(userModel?.dateOfBirth || null);
+  const [dateOfBirth, setDateOfBirth] = useState<Date | null>(userModel?.dateOfBirth || null);
   const [addresses, setAddresses] = useState<Address[]>(userModel?.addresses || [
     { type: '', street: '', city: '', state: '', zip: '', country: '' },
   ]);
@@ -73,6 +74,7 @@ const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit }) => {
         dateOfBirth,
         addresses
       };
+      console.log('date of birth:', registerRequest.dateOfBirth);
       onSubmit(registerRequest);
     } else {
       const updateUserProfile: UpdateUserProfile = {
@@ -88,8 +90,12 @@ const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit }) => {
     }
   };
 
+  const changeModeToList = () => {
+    if (setListMode) setListMode();
+  }
+
   return (
-    <div className="bg-slate-300 p-14 rounded-3xl border-2 border-s-white w-full max-w-4xl">
+    <div className="bg-sky-100 p-14 rounded-3xl border-2 border-m-white w-full max-w-5xl mb-2">
       <h2 className="text-3xl font-mono text-center mb-4 text-sky-950 rounded-full">{mode === 'register' ? 'Registration Form' : mode === 'edit' ? 'Edit Profile' : 'View Profile'}</h2>
       <form className=''>
         <div className="grid grid-cols-1">
@@ -100,21 +106,21 @@ const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit }) => {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                disabled={mode === 'view'}
+                disabled={false}
               />
               <Input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                disabled={mode === 'view'}
+                disabled={false}
               />
               <Input
                 type="password"
                 placeholder="Confirm Password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                disabled={mode === 'view'}
+                disabled={false}
               />
               
             </div>
@@ -188,13 +194,30 @@ const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit }) => {
             </div>
           )}
         </div>
-        {mode !== 'view' && (
-          <div className="ml-8 mr-8">
-            <Button className="mt-10 w-full" onClick={handleSubmit}>
-              {mode === 'register' ? 'Register' : 'Save'}
-            </Button>
+          <div className='flex flex-col'>
+            <div>
+              {mode !== 'view' && (
+                <div className="ml-8 mr-8">
+                  <Button className="mt-10 w-full" onClick={handleSubmit}>
+                    {mode === 'register' ? 'Register' : 'Save'}
+                  </Button>
+                </div>
+              )}
+            </div>
+            <div>
+              {mode != 'register' && (
+                  <div className='rounded-full ml-8 mr-8'>
+                          <Button 
+                            className="mt-10 w-full"
+                            onClick={changeModeToList}
+                            >
+                            {/*<FiArrowLeft size={22}/>*/}
+                            {'Back'}
+                          </Button>
+                  </div>  
+                )}
+            </div>
           </div>
-        )}
       </form>
     </div>
   );

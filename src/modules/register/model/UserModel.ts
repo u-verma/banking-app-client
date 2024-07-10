@@ -29,7 +29,7 @@ export interface Address {
     userType: UserType | '';
     email: string;
     phone: string;
-    dateOfBirth: string | null;
+    dateOfBirth: Date | null;
     addresses: Address[];
   }
 

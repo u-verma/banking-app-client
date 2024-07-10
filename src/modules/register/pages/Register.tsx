@@ -11,9 +11,10 @@ const Register: React.FC = () => {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const handleRegister = async (user: RegisterUserRequest | UpdateUserProfile) => {
+  const handleRegister = async (userRequest: RegisterUserRequest | UpdateUserProfile) => {
     try {
-      const response = await registerUser(user);
+      console.log('date of birth:', userRequest.dateOfBirth);
+      const response = await registerUser(userRequest as RegisterUserRequest);
       const registeredUser = response.data;
       console.log('User registered:', registeredUser);
       login(registeredUser); // Store the user data including ID
@@ -25,13 +26,13 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="relative flex flex-col h-min-screen bg-green-950">
+    <div className="relative flex flex-col h-min-screen ">
       <HomeHeader />
       <div className="absolute inset-0 opacity-50 z-0">
         <img src={backgroundImage} alt="Background" className="w-full h-full object-cover" />
       </div>
-      <div className="flex flex-grow items-center opacity-90 justify-center text-white p-12 z-5">
-        <UserForm mode="register" onSubmit={handleRegister} />
+      <div className="flex flex-grow items-center opacity-80 justify-center text-white p-12 z-20">
+        <UserForm mode="register" onSubmit={handleRegister}/>
       </div>
     </div>
   );
