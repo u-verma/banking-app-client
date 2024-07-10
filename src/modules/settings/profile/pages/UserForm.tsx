@@ -5,7 +5,7 @@ import Button from '../../../core/components/Button';
 import { Address, AddressType, RegisterUserRequest, UpdateUserProfile, UserType } from '../../../register/model/UserModel';
 import AddressForm from '../../../register/pages/AddressForm';
 import Option from '../../../core/components/Option';
-import { FiPlusCircle, FiArrowLeft} from 'react-icons/fi';
+import { FiPlusCircle} from 'react-icons/fi';
 
 const addressTypes = [AddressType.HOME, AddressType.WORK, AddressType.OTHER];
 const userTypes = [UserType.ADMIN, UserType.CUSTOMER, UserType.EMPLOYEE];
@@ -211,7 +211,6 @@ const UserForm: React.FC<UserFormProps> = ({ userModel, mode, onSubmit, setListM
                             className="mt-10 w-full"
                             onClick={changeModeToList}
                             >
-                            {/*<FiArrowLeft size={22}/>*/}
                             {'Back'}
                           </Button>
                   </div>  
